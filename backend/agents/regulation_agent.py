@@ -1,36 +1,30 @@
+import json
+import os
+
+
 class RegulationAgent:
     """
-    Manages compliance regulations and provides
-    applicable regulatory information.
+    Loads and manages compliance regulations.
     """
 
     def __init__(self):
-        self.regulations = [
-            {
-                "id": "REG001",
-                "name": "Anti-Money Laundering",
-                "description": "Prevents and detects money laundering activities.",
-                "risk_area": "Financial Transactions"
-            },
-            {
-                "id": "REG002",
-                "name": "Data Privacy",
-                "description": "Protects personal and sensitive customer information.",
-                "risk_area": "Data Protection"
-            },
-            {
-                "id": "REG003",
-                "name": "Fraud Prevention",
-                "description": "Helps organizations identify and prevent fraudulent activities.",
-                "risk_area": "Fraud"
-            },
-            {
-                "id": "REG004",
-                "name": "Insider Trading",
-                "description": "Prevents misuse of confidential financial information.",
-                "risk_area": "Financial Markets"
-            }
-        ]
+        self.regulations = self.load_regulations()
+
+    def load_regulations(self):
+        file_path = os.path.join(
+            os.path.dirname(os.path.dirname(__file__)),
+            "data",
+            "regulations.json"
+        )
+
+        try:
+            with open(file_path, "r", encoding="utf-8") as file:
+                data = json.load(file)
+
+            return data.get("regulations", [])
+
+        except FileNotFoundError:
+            return []
 
     def get_regulations(self):
         return {
