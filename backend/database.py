@@ -1,6 +1,10 @@
 import sqlite3
+import os
 
-DATABASE_NAME = "compliance.db"
+DATABASE_NAME = os.path.join(
+    os.path.dirname(__file__),
+    "compliance.db"
+)
 
 
 def get_connection():
@@ -14,21 +18,21 @@ def initialize_database():
     cursor = connection.cursor()
 
     cursor.execute("""
-        CREATE TABLE IF NOT EXISTS audit_logs (
+        CREATE TABLE IF NOT EXISTS transactions (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
-            activity TEXT NOT NULL,
-            result TEXT NOT NULL,
+            transaction_id TEXT,
+            amount REAL,
+            status TEXT,
             risk_level TEXT,
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         )
     """)
 
     cursor.execute("""
-        CREATE TABLE IF NOT EXISTS transactions (
+        CREATE TABLE IF NOT EXISTS audit_logs (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
-            transaction_id TEXT,
-            amount REAL,
-            status TEXT,
+            activity TEXT NOT NULL,
+            result TEXT NOT NULL,
             risk_level TEXT,
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         )
@@ -47,17 +51,47 @@ def initialize_database():
     connection.close()
 
 
-def add_audit_log(activity, result, risk_level):
+def save_transaction(
+    transaction_id,
+    amount,
+    status,
+    risk_level
+):
     connection = get_connection()
     cursor = connection.cursor()
 
-    cursor.execute(
-        """
-        INSERT INTO audit_logs (activity, result, risk_level)
-        VALUES (?, ?, ?)
-        """,
+    cursor.execute("""
+        INSERT INTO transactions
+        (transaction_id, amount, status, risk_level)
+        VALUES (?, ?, ?, ?)
+    """, (
+        transaction_id,
+        amount,
+        status,
+        risk_level
+    ))
+
+    connection.commit()
+    connection.close()
+
+
+def add_audit_log(
+    activity,
+    result,
+    risk_level
+):
+    connection = get_connection()
+    cursor = connection.cursor()
+
+    cursor.execute("""
+        INSERT INTO audit_logs
         (activity, result, risk_level)
-    )
+        VALUES (?, ?, ?)
+    """, (
+        activity,
+        result,
+        risk_level
+    ))
 
     connection.commit()
     connection.close()
@@ -68,11 +102,33 @@ def get_audit_logs():
     cursor = connection.cursor()
 
     cursor.execute("""
-        SELECT * FROM audit_logs
+        SELECT *
+        FROM audit_logs
         ORDER BY created_at DESC
     """)
 
-    logs = [dict(row) for row in cursor.fetchall()]
+    logs = [
+        dict(row)
+        for row in cursor.fetchall()
+    ]
 
     connection.close()
+
     return logs
+
+
+def save_report(title, content):
+    connection = get_connection()
+    cursor = connection.cursor()
+
+    cursor.execute("""
+        INSERT INTO reports
+        (title, content)
+        VALUES (?, ?)
+    """, (
+        title,
+        content
+    ))
+
+    connection.commit()
+    connection.close()
