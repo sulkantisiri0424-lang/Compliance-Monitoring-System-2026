@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Compliance Monitoring System</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <header>
+        <h1>Compliance Monitoring System</h1>
+        <p>AI-Powered Compliance Monitoring Dashboard</p>
+    </header>
+
+    <main>
+
+        <section class="dashboard">
+
+            <div class="card">
+                <h2>System Status</h2>
+                <p id="systemStatus">Checking...</p>
+            </div>
+
+            <div class="card">
+                <h2>Regulations</h2>
+                <p id="regulationCount">0</p>
+            </div>
+
+            <div class="card">
+                <h2>Audit Logs</h2>
+                <p id="auditCount">0</p>
+            </div>
+
+        </section>
+
+
+        <section class="monitor-section">
+
+            <h2>Transaction Monitoring</h2>
+
+            <input
+                type="text"
+                id="transactionId"
+                placeholder="Transaction ID"
+            >
+
+            <input
+                type="number"
+                id="amount"
+                placeholder="Transaction Amount"
+            >
+
+            <button onclick="monitorTransaction()">
+                Analyze Transaction
+            </button>
+
+            <div id="transactionResult"></div>
+
+        </section>
+
+
+        <section class="monitor-section">
+
+            <h2>Communication Monitoring</h2>
+
+            <textarea
+                id="message"
+                placeholder="Enter communication message..."
+            ></textarea>
+
+            <button onclick="scanCommunication()">
+                Scan Communication
+            </button>
+
+            <div id="communicationResult"></div>
+
+        </section>
+
+
+        <section class="monitor-section">
+
+            <h2>Compliance Report</h2>
+
+            <button onclick="generateReport()">
+                Generate Report
+            </button>
+
+            <div id="reportResult"></div>
+
+        </section>
+
+    </main>
+
+    <footer>
+        <p>Compliance Monitoring System 2026</p>
+    </footer>
+
+    <script src="script.js"></script>
+
+</body>
+</html>
