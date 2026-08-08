@@ -1,13 +1,10 @@
-from fastapi import FastAPI
-from fastapi.middleware.cors import CORSMiddleware
+from backend.agents.transaction_agent import TransactionMonitor
+from backend.agents.communication_agent import CommunicationScanner
+from backend.agents.regulation_agent import RegulationAgent
+from backend.agents.audit_agent import AuditAgent
+from backend.agents.report_agent import ReportAgent
 
-from agents.transaction_agent import TransactionMonitor
-from agents.communication_agent import CommunicationScanner
-from agents.regulation_agent import RegulationAgent
-from agents.audit_agent import AuditAgent
-from agents.report_agent import ReportAgent
-
-from database import (
+from backend.database import (
     initialize_database,
     save_transaction,
     add_audit_log,
