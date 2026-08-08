@@ -1,0 +1,39 @@
+{
+  "regulations": [
+    {
+      "id": "REG001",
+      "name": "Anti-Money Laundering",
+      "description": "Prevents and detects money laundering activities.",
+      "risk_area": "Financial Transactions",
+      "severity": "HIGH"
+    },
+    {
+      "id": "REG002",
+      "name": "Data Privacy",
+      "description": "Protects personal and sensitive customer information.",
+      "risk_area": "Data Protection",
+      "severity": "HIGH"
+    },
+    {
+      "id": "REG003",
+      "name": "Fraud Prevention",
+      "description": "Helps organizations identify and prevent fraudulent activities.",
+      "risk_area": "Fraud",
+      "severity": "HIGH"
+    },
+    {
+      "id": "REG004",
+      "name": "Insider Trading",
+      "description": "Prevents misuse of confidential financial information.",
+      "risk_area": "Financial Markets",
+      "severity": "HIGH"
+    },
+    {
+      "id": "REG005",
+      "name": "Record Keeping",
+      "description": "Maintains accurate records for compliance and auditing.",
+      "risk_area": "Audit",
+      "severity": "MEDIUM"
+    }
+  ]
+}
